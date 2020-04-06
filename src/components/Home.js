@@ -68,7 +68,6 @@ export default class Home extends Component {
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Phone Number</th>
-                            <th>Created At</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -82,7 +81,6 @@ export default class Home extends Component {
                                         <td>{user.lastName}</td>
                                         <td>{user.email}</td>
                                         <td>{user.phoneNumber}</td>
-                                        <td>{user.createdAt}</td>
                                         <td>
                                             <button className="btn btn-success mr-2" onClick={() => this.deleteUser(user.id)}> Delete</button>
                                             <button className="btn btn-success" onClick={() => this.editUser(user.id)}> Edit</button>
