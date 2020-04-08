@@ -44,7 +44,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cloud-techie/basic-user-management/issues"
-  },
-  "homepage": "https://github.com/cloud-techie/basic-user-management#readme",
-  "keywords": []
+  }
 }
