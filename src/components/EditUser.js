@@ -15,6 +15,28 @@ export default class AddUser extends Component {
         this.cancel = this.cancel.bind(this);
     }
 
+    componentDidMount() {
+        fetch("https://to37kj1zuk.execute-api.ap-southeast-2.amazonaws.com/dev/user/" + window.localStorage.getItem("userName"))
+        .then(response => response.json())
+        .then(
+            (result) => {
+                console.log(result);
+                this.setState({
+                    userName: result.userName,
+                    firstName: result.firstName,
+                    lastName: result.lastName,
+                    email: result.email,
+                    phoneNumber: result.phoneNumber
+                });
+            },
+            (error) => {
+                this.setState({
+                    error
+                });
+            }
+        );
+    }
+
     saveUser = (e) => {
         e.preventDefault();
         const requestOptions = {
@@ -73,7 +95,7 @@ export default class AddUser extends Component {
                     </div>
                     <div className="form-group">
                         <label>Email:</label>
-                        <input type="text" placeholder="Email" required name="email" className="form-control" value={this.state.password} onChange={this.onChange}/>
+                        <input type="text" placeholder="Email" required name="email" className="form-control" value={this.state.email} onChange={this.onChange}/>
                     </div>
                     <div className="form-group">
                         <label>Phone Number:</label>

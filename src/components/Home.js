@@ -6,7 +6,6 @@ export default class Home extends Component {
         super(props);
         this.state = {
             error: null,
-            isLoaded: false,
             users: []
         }
         this.deleteUser = this.deleteUser.bind(this);
@@ -15,43 +14,54 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch("https://i6e591cbkf.execute-api.ap-southeast-2.amazonaws.com/dev/users")
+        fetch("https://to37kj1zuk.execute-api.ap-southeast-2.amazonaws.com/dev/users")
+        .then(response => response.json())
+        .then(
+            (result) => {
+                console.log(result);
+                this.setState({
+                    isLoaded: true,
+                    users: result
+                });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        );
+    }
+
+    deleteUser(userName) {
+        if (window.confirm("Are you sure??")) {
+            this.setState({message : 'User deleted successfully.'});
+            const requestOptions = {
+                method: 'delete'
+            };
+            fetch("https://to37kj1zuk.execute-api.ap-southeast-2.amazonaws.com/dev/user/" + userName, requestOptions)
             .then(response => response.json())
             .then(
                 (result) => {
-                    console.log(result);
-                    this.setState({
-                        isLoaded: true,
-                        users: result
-                    });
+                    this.componentDidMount();
                 },
                 (error) => {
                     this.setState({
-                        isLoaded: true,
                         error
                     });
                 }
-            );
+            );            
+        }
     }
 
-    deleteUser(userId) {
-        this.setState({message : 'User deleted successfully.'});
-        this.setState({users: this.state.users.filter(user => user.id !== userId)});
-    }
-
-    editUser(id) {
-        window.localStorage.setItem("userId", id);
+    editUser(userName) {
+        window.localStorage.setItem("userName", userName);
         this.props.history.push('/edit-user');
     }
 
     addUser() {
         window.localStorage.removeItem("userId");
         this.props.history.push('/add-user');
-    }
-
-    saveUser(user) {
-        var joined = this.state.users.concat(user);
-        this.setState({users : joined});
     }
 
     render() {
@@ -82,8 +92,8 @@ export default class Home extends Component {
                                         <td>{user.email}</td>
                                         <td>{user.phoneNumber}</td>
                                         <td>
-                                            <button className="btn btn-success mr-2" onClick={() => this.deleteUser(user.id)}> Delete</button>
-                                            <button className="btn btn-success" onClick={() => this.editUser(user.id)}> Edit</button>
+                                            <button className="btn btn-success mr-2" onClick={() => this.editUser(user.userName)}> Edit</button>
+                                            <button className="btn btn-success" onClick={() => this.deleteUser(user.userName)}> Delete</button>
                                         </td>
                                     </tr>
                             )

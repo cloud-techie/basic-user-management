@@ -8,6 +8,7 @@ import SignUp from "./components/Singup";
 import Home from "./components/Home";
 import Logout from "./components/Logout";
 import AddUser from "./components/AddUser";
+import EditUser from "./components/EditUser";
 import ForgotPassword from "./components/ForgotPassword"
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route path="/sign-up" component={SignUp} />
             <Route path="/home" component={Home} />
             <Route path="/add-user" component={AddUser} />
+            <Route path="/edit-user" component={EditUser} />
             <Route path="/forgot-password" component={ForgotPassword} />
           </Switch>
         </div>
